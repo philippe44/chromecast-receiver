@@ -113,21 +113,6 @@ Cast.
       )
         
       context.start();
-	  
-  	  // Event listener for MEDIA_STATUS
-	  context.addEventListener(
-		cast.framework.events.EventType.MEDIA_STATUS,
-		(event) => {
-			// Check if mediaStatus is present
-			if (event.mediaStatus) {
-				// Modify the elapsed time (in seconds)
-				const modifiedElapsedTime = 10; // Set your desired elapsed time
-
-				// Update mediaStatus with the modified elapsed time
-				event.mediaStatus.currentTime = modifiedElapsedTime;
-			}
-		}
-	  );
 
     </script>
   </footer>
