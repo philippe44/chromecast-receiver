@@ -83,7 +83,7 @@ Cast.
           const mediaInformation = playerManager.getMediaInformation()
           // update its metadata
           if (customData.metadata) mediaInformation.metadata = customData.metadata
-		  console.log('YEP', mediaInformation);		  
+		  //console.log('YEP', mediaInformation);		  
 		  if (customData.live_duration) {
 			const currentShow = new cast.framework.messages.MusicTrackMediaMetadata();
 			currentShow.title = 'TAGADA';
@@ -100,7 +100,7 @@ Cast.
 			//mediaInformation.startAbsoluteTime = new Date().getTime() / 1000;
 		  }
 		  // update current media information
-          playerManager.setMediaInformation(mediaInformation)
+          //playerManager.setMediaInformation(mediaInformation)
         } catch(err){
           console.warn("updateMetadata error", err)
         }
