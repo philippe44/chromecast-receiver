@@ -24,7 +24,7 @@ Cast.
   <!--<link rel="stylesheet" href="css/receiver.css" media="screen" />-->
   <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
   <!-- Cast Debug Logger -->
-  <!--<script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>-->
+  <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
 </head>
 
 <body>
@@ -38,6 +38,8 @@ Cast.
 
       const context = cast.framework.CastReceiverContext.getInstance();
       const playerManager = context.getPlayerManager();
+	  const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
+	  const TAG = 'receiver';
 	  
       // helper : query elements even deeply within shadow doms
       function querySelectorDeep(selector, root = document) {
@@ -77,12 +79,18 @@ Cast.
       }
 
       // update metadata
-      function updateMetadata(metaData){
+      function updateMetadata(customData){
         try {
           // retrieve current media information
           const mediaInformation = playerManager.getMediaInformation()
           // update its metadata
-          mediaInformation.metadata = metaData
+          if (customData.metadata) mediaInformation.metadata = customData.metaData
+		  castDebugLogger.debug(TAG, 'YEP');
+		  if (customData.live_duration) {
+			castDebugLogger.debug(TAG, 'YEP-2');
+			mediaInformation.duration = customData.live_duration;
+			mediaInformation.startAbsoluteTime = new Date().getTime() / 1000;
+		  }
 		  // update current media information
           playerManager.setMediaInformation(mediaInformation)
         } catch(err){
@@ -90,13 +98,14 @@ Cast.
         }
       }
 	       
-      // Sender GET_PLAY request
+      // Sender PLAY request
       playerManager.setMessageInterceptor(
         cast.framework.messages.MessageType.PLAY, data => {
           console.log("MSG:PLAY", data)
           // update Player metadata with data.customData.metadata if any
-          if (data && data.customData && data.customData.metadata)
-            updateMetadata(data.customData.metadata)
+          if (data && data.customData)
+            updateMetadata(data.customData)
+			
           return data
         }
       )
@@ -120,10 +129,10 @@ Cast.
 			// Check if mediaStatus is present
 			if (event.mediaStatus) {
 				// Modify the elapsed time (in seconds)
-				const modifiedElapsedTime = 10; // Set your desired elapsed time
+				//const modifiedElapsedTime = 10; // Set your desired elapsed time
 
 				// Update mediaStatus with the modified elapsed time
-				event.mediaStatus.currentTime = modifiedElapsedTime;
+				//event.mediaStatus.currentTime = modifiedElapsedTime;
 			}
 		}
 	  );
