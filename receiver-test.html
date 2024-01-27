@@ -24,7 +24,7 @@ Cast.
   <!--<link rel="stylesheet" href="css/receiver.css" media="screen" />-->
   <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
   <!-- Cast Debug Logger -->
-  <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script>
+  <!-- <script src="//www.gstatic.com/cast/sdk/libs/devtools/debug_layer/caf_receiver_logger.js"></script> -->
 </head>
 
 <body>
@@ -38,9 +38,7 @@ Cast.
 
       const context = cast.framework.CastReceiverContext.getInstance();
       const playerManager = context.getPlayerManager();
-	  const castDebugLogger = cast.debug.CastDebugLogger.getInstance();
-	  const TAG = 'receiver';
-	  
+  
       // helper : query elements even deeply within shadow doms
       function querySelectorDeep(selector, root = document) {
         let currentRoot = root;
@@ -85,12 +83,12 @@ Cast.
           const mediaInformation = playerManager.getMediaInformation()
           // update its metadata
           if (customData.metadata) mediaInformation.metadata = customData.metadata
-		  castDebugLogger.debug(TAG, 'YEP');
+		  console.log('YEP', mediaInformation);		  
 		  if (customData.live_duration) {
-			castDebugLogger.debug(TAG, 'YEP-2');
 			mediaInformation.duration = customData.live_duration;
 			mediaInformation.startAbsoluteTime = new Date().getTime() / 1000;
 		  }
+		  console.log('YEP2', mediaInformation);		  
 		  // update current media information
           playerManager.setMediaInformation(mediaInformation)
         } catch(err){
