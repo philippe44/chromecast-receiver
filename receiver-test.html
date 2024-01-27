@@ -87,6 +87,7 @@ Cast.
 		  if (customData.live_duration) {
 			const currentShow = new cast.framework.messages.MusicTrackMediaMetadata();
 			currentShow.title = 'TAGADA';
+			console.log('YEPEE', currentShow);		  
 			currentShow.sectionStartAbsoluteTime = new Date().getTime() / 1000;
 			currentShow.sectionDuration = customData.live_duration;
 
