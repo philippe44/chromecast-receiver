@@ -85,10 +85,19 @@ Cast.
           if (customData.metadata) mediaInformation.metadata = customData.metadata
 		  console.log('YEP', mediaInformation);		  
 		  if (customData.live_duration) {
-			mediaInformation.duration = customData.live_duration;
-			mediaInformation.startAbsoluteTime = new Date().getTime() / 1000;
+			const currentShow = new cast.framework.messages.MusicTrackMediaMetadata();
+			currentShow.title = 'TAGADA';
+			currentShow.sectionStartAbsoluteTime = new Date().getTime() / 1000;
+			currentShow.sectionDuration = customData.live_duration;
+
+			const containerMetadata = new cast.framework.messages.ContainerMetadata();
+			containerMetadata.title = 'My TV Channel';
+			containerMetadata.sections = [currentShow];
+			playerManager.getQueueManager().setContainerMetadata(containerMetadata);	  
+		  
+			//mediaInformation.duration = customData.live_duration;
+			//mediaInformation.startAbsoluteTime = new Date().getTime() / 1000;
 		  }
-		  console.log('YEP2', mediaInformation);		  
 		  // update current media information
           playerManager.setMediaInformation(mediaInformation)
         } catch(err){
