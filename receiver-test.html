@@ -82,7 +82,8 @@ Cast.
           // retrieve current media information
           const mediaInformation = playerManager.getMediaInformation()
           // update its metadata
-          if (customData.metadata) mediaInformation.metadata = customData.metadata
+          
+		  if (customData.metadata) mediaInformation.metadata = customData.metadata
 		  //console.log('YEP', mediaInformation);		  
 		  if (customData.live_duration) {
 			const currentShow = new cast.framework.messages.MusicTrackMediaMetadata();
